@@ -57,6 +57,8 @@
         
         internal static readonly ICollection<Type> AllowedSqlTypes = new HashSet<Type>()
         {
+            // TODO: Add nullable types as well
+            
             // String data types
             typeof(string),
             typeof(char), // Represents SQL CHAR(1) / NCHAR(1)
