@@ -33,8 +33,12 @@ ScaffoldingReadMe.txt
 
 # NuGet Packages
 *.nupkg
+
 # NuGet Symbol Packages
 *.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
 
 # Others
 ~$*
@@ -52,3 +56,84 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Dotnet CLI
+*.dbmdl
+*.log
+*.vspscc
+
+# Rider / IntelliJ IDEA project files
+.idea/
+*.sln.iml
+*.iws
+*.ipr
+
+# Rider caches
+.idea/.idea.*
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+.idea/**/dataSources/
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
+
+# DataGrip connections and local settings
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/sqldialects.xml
+.idea/uiDesigner.xml
+.idea/**/jdbc-drivers/
+
+# SQL Server local db files
+*.mdf
+*.ldf
+*.ndf
+sql_data/
+docker-data/
+
+# SQL backup and export files
+*.bak
+*.trn
+*.sqlproj.user
+*.dacpac
+*.bacpac
+
+# SQL Server profiler traces & logs
+*.trc
+*.log
+
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# VS files
+.vs/
+Generated_Code/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
