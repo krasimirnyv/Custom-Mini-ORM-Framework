@@ -37,9 +37,9 @@
             }
             
             // Add the entity to the collection of entities
-            Entities.Add(entity);
+            this.Entities.Add(entity);
             // Track the added entity in the ChangeTracker
-            ChangeTracker.Add(entity);
+            this.ChangeTracker.Add(entity);
         }
 
         public bool Remove(TEntity? entity)

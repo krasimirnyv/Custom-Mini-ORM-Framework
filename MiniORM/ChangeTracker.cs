@@ -70,10 +70,10 @@
 
             foreach (TEntity proxyEntity in this.AllEntities)
             {
-                IEnumerable<object> proxyPrimaryKeyValues = GetPrimaryKeyValues(primaryKeys, proxyEntity);
+                IEnumerable<object> primaryKeyValues = GetPrimaryKeyValues(proxyEntity, primaryKeys);
                 
                 TEntity localEntity = dbSet.Entities
-                    .Single(le => GetPrimaryKeyValues(primaryKeys, le).SequenceEqual(proxyPrimaryKeyValues));
+                    .Single(le => GetPrimaryKeyValues(le, primaryKeys).SequenceEqual(primaryKeyValues));
                 
                 bool isModified = IsModified(proxyEntity, localEntity);
                 if (isModified)
@@ -106,41 +106,27 @@
                     property.SetValue(clonedEntity, propertyValue);
                 }
                 
-                clonedEntities.Add(clonedEntity);
+                // clonedEntities.Add(clonedEntity);
             }
 
             return clonedEntities;
         }
         
-        private static IEnumerable<object> GetPrimaryKeyValues(IEnumerable<PropertyInfo> primaryKeys, TEntity entity)
+        private static IEnumerable<object> GetPrimaryKeyValues(TEntity entity, PropertyInfo[] primaryKeys)
         {
-            ICollection<object> primaryKeyValues = new HashSet<object>();
-            foreach (PropertyInfo primaryKeyInfo in primaryKeys)
-            {
-                object? primaryKeyValue = primaryKeyInfo.GetValue(entity);
-                if (primaryKeyValue is null)
-                {
-                    throw new ArgumentNullException(string.Format(PrimaryKeyNullErrorMessage, primaryKeyValue));
-                }
-                
-                primaryKeyValues.Add(primaryKeyValue);
-            }
-
-            return primaryKeyValues;
+            return primaryKeys
+                .Select(pk => pk.GetValue(entity))!;
         }
         
-        private static bool IsModified(TEntity dbSetEntity, TEntity proxyEntity)
+        private static bool IsModified(TEntity proxyEntity, TEntity localEntity)
         {
             PropertyInfo[] trackedProperties = typeof(TEntity)
                 .GetProperties()
                 .Where(pi => DbContext.AllowedSqlTypes.Contains(pi.PropertyType))
                 .ToArray();
 
-            PropertyInfo[] modifiedProperties = trackedProperties
-                .Where(pi => !Equals(pi.GetValue(dbSetEntity), pi.GetValue(proxyEntity)))
-                .ToArray();
-
-            return modifiedProperties.Length != 0;
+            return trackedProperties
+                .Any(pi => !Equals(pi.GetValue(proxyEntity), pi.GetValue(localEntity)));
         }
     }
 }
